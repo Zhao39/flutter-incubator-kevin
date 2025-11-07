@@ -145,13 +145,36 @@ For better understanding of [`Isolate`]'s design and usage, read through the fol
 
 After completing everything above, you should be able to answer (and understand why) the following questions:
 - What is multitasking? Why it exists? How is it used for solving CPU-bound and I/O-bound problems?
+  Multitasking lets the system handle many tasks efficiently.
+  It exists to maximize CPU utilization and keep programs responsive.
+  We use:
+   Parallelism (Isolates) → for CPU-bound tasks.
+   Asynchronous I/O (Futures & async/await) → for I/O-bound tasks.
 - What is preemptive multitasking? What is cooperative multitasking? Which one is used in [Dart]?
+  Preemptive multitasking is when the operating system decides when to pause one task and switch to another — automatically.
+  Each task (or thread) gets a time slice, and when that time’s up, the system preempts it (interrupts it) and runs the next one.
+  Dart uses cooperative multitasking — each async function runs to completion or until await gives control back to the event loop.
 - What is asynchronous programming and when do we need it? How is it represented in [Dart]?
+  Asynchronous programming means your program can start a task and keep doing other things while waiting for it to finish — instead of freezing or blocking until it’s done.
+  In Dart, it’s expressed with:
+   Future → a single async result
+   Stream → multiple async results
+   async/await → for clean, readable async code
 - What is a [`Stream`] and how this abstraction is useful? Give some real-world examples of using it.
+  A Stream lets you handle data that flows over time — like messages, user input, or file chunks — without blocking your program.
+  It’s Dart’s way of saying, “Hey, I’ll let you know when there’s something new.”
 - What is a [`Timer`] and how this abstraction is useful? Give some real-world examples of using it.
+  A Timer lets Dart handle “do this later” or “do this every few seconds” tasks without blocking the program — super handy for time-based logic, from countdowns to background syncs.
 - How does [Dart] handles multiple [`Isolate`]s? How do they communicate with each other? How to share memory between [`Isolate`]s?
+  Dart isolates are like mini-programs inside your app — each running independently.
+  They don’t share memory (to keep things safe and simple) — instead, they communicate by sending messages or transferring data.
 - How `Isolate.spawn` and `Isolate.spawnUri` are different?
+  Use Isolate.spawn() when you just need to run a background function within your app.
+  Use Isolate.spawnUri() when you want to launch a completely separate Dart script — like a microservice or plugin running independently.
 - What is concurrency and how is it different from parallelism? How both are represented in [Dart]?
+  Dart uses concurrency for async I/O (like networking or file reads).
+  Dart uses parallelism via isolates for heavy CPU tasks.
+  Both exist to keep your app fast and responsive, but they tackle different performance problems.
 
 
 
