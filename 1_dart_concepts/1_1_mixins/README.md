@@ -86,11 +86,22 @@ For better understanding of [mixins][21] design, benefits and use-cases, read th
 
 After completing everything above, you should be able to answer (and understand why) the following questions:
 - Why do you need to extend classes? Name some examples.
+  We extend classes when we want to reuse code and add new or specialized behavior without rewriting everything from scratch.
+  Sword, Helmet, Weapon, Armor etc
 - Can extension be private? Unnamed? Generic?
+  You can make an extension private by prefixing its name with an underscore (_), just like private classes or functions in Dart.
+  Unnamed extensions are great for small utilities you want to keep local and simple.
+  Extensions can be generic, so they work on multiple types instead of one fixed type.
 - How to resolve naming conflicts when multiple extensions define the same methods?
+  If two extensions define the same method, Dart won’t know which one to use, so you need to call it explicitly using the extension name, like FancyString('hello').printInfo().
+  When extensions clash, Dart makes you be clear — just use the extension’s name or import prefix to tell it exactly which version you want.
 - What is reasoning behind mixins? Why would you need them? Provide some examples.
+  Mixins in Dart are like a way to share code across multiple classes without using inheritance. Instead of creating a long class hierarchy, you can just “mix in” pieces of functionality wherever you need them.
+  Here, Weapon and Armor are mixins.
 - Can you add static methods and/or fields to mixins?
+  You can have static methods or fields in a mixin, but they stay attached to the mixin type, not the classes that use it.
 - `class`, `mixin`, or `mixin class`? What are differences? When to use each one?
+  class = blueprint for objects, mixin = reusable behavior, not an object, mixin class = flexible hybrid — reusable and instantiable
 
 
 
