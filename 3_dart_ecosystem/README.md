@@ -115,19 +115,53 @@ Create a [Dart] package (`dart create -t package task`) implementing a simple `C
 
 After completing everything above, you should be able to answer (and understand why) the following questions:
 - What is pub? What it does? Why do we need it?
+  pub is Dart’s package and dependency manager.
+  It installs, updates, and runs project dependencies automatically, ensuring your Dart app or package is easy to build, share, and maintain.
 - What is pub spec? Which purpose does it serve?
+  pubspec.yaml is the heart of every Dart project — it declares your app’s name, environment, dependencies, and build configuration.
+  It allows the pub tool to install, manage, and build your project consistently.
 - What is the purpose of `pubspec.lock` file? When and why it should be stored in [VCS], and when not? 
+  pubspec.lock locks your dependencies to exact versions for stable, repeatable builds.
+  Commit it for apps, ignore it for packages — that’s the Dart ecosystem standard.
 - What does "version range" mean? How is it useful for dependencies?
+  A version range specifies which versions of a dependency your Dart project can accept.
+  It gives you the balance between stability (avoiding breaking changes) and flexibility (allowing safe updates).
 - Where is pub able to get dependencies from?
+  pub can fetch dependencies from pub.dev, local paths, Git repositories, custom hosted servers, or the Dart/Flutter SDK — giving you flexibility to manage both public and private packages efficiently.
 - What is the difference between development dependencies and regular one? Which ones should be used and when?
+  Regular dependencies are needed when your app runs.
+  Development dependencies are needed when your app is built, tested, or analyzed.
+  Use each appropriately to keep your build lightweight, faster, and clean.
 - How [Dart] projects are structured in files? Which are common conventions and what for?
+  Dart projects follow a standard file and folder structure (lib/, bin/, test/, etc.) to keep code organized, testable, and reusable.
+  This convention helps both tools and developers work seamlessly across projects in the Dart ecosystem.
 - What do we need [Effective Dart] for? Why is it vital?
+  Effective Dart is like good manners for Dart developers — it keeps your code neat, consistent, and easy to work with, no matter who joins the project.
 - What is `dart format` used for? What are the benefits of using it?
+  dart format automatically makes your code follow Dart’s official style.
+  It keeps your project consistent, readable, and professional — while saving you time and avoiding team arguments about formatting.
 - How commas are used to guide code formatting in [Dart]?
+  Commas in Dart — especially trailing commas — guide how the formatter arranges your code into clean, multi-line structures.
+  They make your code more readable, consistent, and effortless to maintain — especially in large widget trees or function calls.
 - What is static analysis? What is linting? How they are represented in [Dart]? Why should we use them?
+  Static analysis means checking your code without running it — the Dart analyzer looks at your code and finds potential problems early.
+  It analyzes your program’s structure, types, and syntax to catch errors before runtime.
+  Linting is a special kind of static analysis focused on style, readability, and best practices rather than correctness.
+  It’s about how you write code, not just whether it works.
+  Together, they keep your codebase reliable, readable, and professional — the backbone of high-quality Dart development.
 - Why source code documentation matters? How is it represented in [Dart]?
+  Source code documentation explains why and how your code works.
+  In Dart, it’s written using triple-slash /// comments and processed by tools like DartDoc.
+  It’s vital because it turns your code from “just working” into something understandable, teachable, and maintainable.
 - Which are good practices for documenting code and [API]s in [Dart]? 
+  In Dart, use /// comments to document what your code does and why.
+  Keep docs short, consistent, and accurate; link related symbols with [brackets]; and focus on public APIs.
+  Good documentation turns code into something anyone can understand — even months or years later.
 - How can one publish and serve [API] documentation in [Dart]? 
+  In Dart, you generate API documentation using dart doc, which creates HTML files from your /// comments.
+  You can view it locally, publish it automatically on pub.dev, or host it yourself (e.g., GitHub Pages).
+  It’s an easy way to turn your code into a clear, navigable reference site — no extra tools needed.
+
 
 
 
