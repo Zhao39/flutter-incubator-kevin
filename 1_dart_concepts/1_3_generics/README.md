@@ -34,6 +34,9 @@ Implement a method, returning the maximum element from a `Comparable` list. You 
 
 After completing everything above, you should be able to answer (and understand why) the following questions:
 - What are generics in [Dart]? Why are they useful?
+  Generics in Dart let you write flexible, reusable, and type-safe code by allowing type parameters to be passed into classes, methods, or functions.
+  Generics let you write type-safe, reusable, and flexible code.
+  They’re used everywhere in Dart’s standard library — List<T>, Map<K, V>, Future<T>, and many others.
 - What is a type parameter? How can a type parameter be constrained?
 
 
