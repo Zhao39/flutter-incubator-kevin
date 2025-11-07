@@ -1,7 +1,49 @@
-/// Object equipable by a [Character].
 abstract class Item {}
 
-/// Entity equipping [Item]s.
+mixin Weapon on Item {
+  int get damage;
+}
+
+mixin Armor on Item {
+  int get defense;
+}
+
+class Sword extends Item with Weapon {
+  @override
+  final int damage;
+  Sword(this.damage);
+}
+
+class Shield extends Item with Armor {
+  @override
+  final int defense;
+  Shield(this.defense);
+}
+
+class Helmet extends Item with Armor {
+  @override
+  final int defense;
+  Helmet(this.defense);
+}
+
+class Chestplate extends Item with Armor {
+  @override
+  final int defense;
+  Chestplate(this.defense);
+}
+
+class Pants extends Item with Armor {
+  @override
+  final int defense;
+  Pants(this.defense);
+}
+
+class Boots extends Item with Armor {
+  @override
+  final int defense;
+  Boots(this.defense);
+}
+
 class Character {
   Item? leftHand;
   Item? rightHand;
@@ -10,37 +52,52 @@ class Character {
   Item? legs;
   Item? shoes;
 
-  /// Returns all the [Item]s equipped by this [Character].
   Iterable<Item> get equipped =>
       [leftHand, rightHand, hat, torso, legs, shoes].whereType<Item>();
 
-  /// Returns the total damage of this [Character].
-  int get damage {
-    // TODO: Implement me.
-    return 0;
-  }
+  int get damage =>
+      equipped.whereType<Weapon>().fold(0, (sum, w) => sum + w.damage);
 
-  /// Returns the total defense of this [Character].
-  int get defense {
-    // TODO: Implement me.
-    return 0;
-  }
+  int get defense =>
+      equipped.whereType<Armor>().fold(0, (sum, a) => sum + a.defense);
 
-  /// Equips the provided [item], meaning putting it to the corresponding slot.
-  ///
-  /// If there's already a slot occupied, then throws a [OverflowException].
   void equip(Item item) {
-    // TODO: Implement me.
+    if (item is Weapon) {
+      if (leftHand == null) {
+        leftHand = item;
+      } else if (rightHand == null) {
+        rightHand = item;
+      } else {
+        throw OverflowException();
+      }
+    } else if (item is Helmet) {
+      if (hat == null) hat = item; else throw OverflowException();
+    } else if (item is Chestplate) {
+      if (torso == null) torso = item; else throw OverflowException();
+    } else if (item is Pants) {
+      if (legs == null) legs = item; else throw OverflowException();
+    } else if (item is Boots) {
+      if (shoes == null) shoes = item; else throw OverflowException();
+    } else {
+      throw Exception('Unknown item type: ${item.runtimeType}');
+    }
   }
 }
 
-/// [Exception] indicating there's no place left in the [Character]'s slot.
-class OverflowException implements Exception {}
+class OverflowException implements Exception {
+  @override
+  String toString() => 'OverflowException: Slot already occupied';
+}
 
 void main() {
-  // Implement mixins to differentiate [Item]s into separate categories to be
-  // equipped by a [Character]: weapons should have some damage property, while
-  // armor should have some defense property.
-  //
-  // [Character] can equip weapons into hands, helmets onto hat, etc.
+  final hero = Character();
+  hero.equip(Sword(25));
+  hero.equip(Shield(10));
+  hero.equip(Helmet(5));
+  hero.equip(Chestplate(15));
+  hero.equip(Pants(10));
+  hero.equip(Boots(8));
+
+  print('Total damage: ${hero.damage}');
+  print('Total defense: ${hero.defense}');
 }
