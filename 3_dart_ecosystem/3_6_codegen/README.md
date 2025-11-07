@@ -169,11 +169,32 @@ For more information and insights about [code generation][10] in [Dart], read th
 
 After completing everything above, you should be able to answer (and understand why) the following questions:
 - What is code generation? Which problems does it solve and how?
+  Code generation is the automatic creation of source code by tools or scripts based on existing input—like annotations, schemas, or interface definitions.
+  It solves the boilerplate problem: repetitive, error-prone code that developers would otherwise have to write manually (e.g., serialization, API clients, data models).
+  By generating code automatically, Dart developers ensure consistency, type safety, and faster development, especially in large projects (like with json_serializable, retrofit, or isar) while keeping manually written code clean and focused on business logic.
 - How code generations is represented in [Dart]?
+  Code generation in Dart is represented by Builders registered in a build.yaml file, executed by build_runner, and often powered by source_gen to create .g.dart files automatically during builds.
 - How [`Builder`]s are registered and used in a [Dart] project?
+  Builders are implemented in Dart using the Builder class, registered in build.yaml, and executed by build_runner to generate or transform code automatically during the build process.
 - What is the purpose of [`analyzer`] and [`source_gen`] packages? Why do we need them for code generation in [Dart]?
+  analyzer helps your tool understand existing Dart code.
+  source_gen helps your tool write Dart code safely and automatically.
+
+  Why both are needed
+    analyzer reads and interprets existing Dart code.
+    source_gen uses that information to produce new Dart code and plug into the build_runner pipeline.
 - What are annotations in [Dart]? How are custom annotations created? How they can be used and why?
+  An annotation is a special piece of metadata attached to a declaration (class, method, field, etc.) using the @ symbol.
+  You define an annotation by creating a constant class or constant value.
+  You attach them with @ before a declaration.
+  Annotations are used to:
+    Mark elements for code generation (@JsonSerializable, @freezed, @HiveType).
+    Provide configuration for generators (@HiveField(0) defines field order).
+    Enable reflection-like behavior safely and efficiently.
+    Support tooling (linters, IDEs, documentation generators).
 - Which are good practices of code generation in [Dart] ecosystem?
+  Good code generation practices in Dart include using .g.dart files, never editing them manually, excluding them from linting, committing them to VCS, and using clear annotations and configurations.
+  These conventions ensure your generated code is reliable, maintainable, and integrates seamlessly with Dart tooling.
 
 
 
