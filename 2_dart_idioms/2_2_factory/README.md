@@ -119,8 +119,14 @@ Implement a `ChatItemQuote.from` [factory constructor][21] in the [code of this 
 
 After completing everything above, you should be able to answer (and understand why) the following questions:
 - What are benefits of using named constructors? When should I use them?
+  Named constructors make your Dart classes more expressive, flexible, and safe.
+  Use them when a class can be created in different, meaningful ways — each with clear intent and possibly custom logic.
 - What are benefits of using factory constructors? When should I use them?
+  Use a factory constructor when you need more control than “always create a new instance.”
+  If your constructor can decide, reuse, or simplify creation, make it a factory.
 - How do both differ?
+  Named constructors are for different ways to build an object.
+  Factory constructors are for controlling how or when an object gets built — maybe returning something else entirely.
 
 
 
