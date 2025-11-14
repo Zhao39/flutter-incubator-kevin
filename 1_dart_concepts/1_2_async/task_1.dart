@@ -1,58 +1,72 @@
-/// Collection of [messages] allowed to be [read].
 class Chat {
   Chat(this.onRead);
 
-  /// Callback, called when this [Chat] should be marked as read until the
-  /// provided [int] remotely.
-  ///
-  /// Intended to be a backend mutation.
   final void Function(int message) onRead;
 
-  /// [List] of messages in this [Chat].
   final List<int> messages = List.generate(30, (i) => i);
 
-  /// Marks this [Chat] as read until the specified [message].
-  void read(int message) {
-    // TODO: [onRead] should be invoked no more than 1 time in a second.
+  DateTime? _lastReadTime;
 
-    onRead(message);
+  int? _pendingMessage;
+
+  void read(int message) {
+    final now = DateTime.now();
+
+    if (_lastReadTime == null ||
+        now.difference(_lastReadTime!) >= const Duration(seconds: 1)) {
+      _lastReadTime = now;
+      onRead(message);
+    } else {
+      _pendingMessage = message;
+
+      final remaining =
+          const Duration(seconds: 1) - now.difference(_lastReadTime!);
+
+      Future.delayed(remaining, () {
+        if (_pendingMessage != null) {
+          _lastReadTime = DateTime.now();
+          onRead(_pendingMessage!);
+          _pendingMessage = null;
+        }
+      });
+    }
   }
 }
 
 Future<void> main() async {
-  final Chat chat = Chat((i) => print('Read until $i'));
+  final Chat chat = Chat((i) => print('Read until $i at ${DateTime.now()}'));
 
   chat.read(0);
 
-  await Future.delayed(Duration(milliseconds: 1000));
+  await Future.delayed(const Duration(milliseconds: 1000));
 
   chat.read(4);
-  await Future.delayed(Duration(milliseconds: 100));
+  await Future.delayed(const Duration(milliseconds: 100));
   chat.read(10);
-  await Future.delayed(Duration(milliseconds: 100));
+  await Future.delayed(const Duration(milliseconds: 100));
   chat.read(11);
-  await Future.delayed(Duration(milliseconds: 100));
+  await Future.delayed(const Duration(milliseconds: 100));
   chat.read(12);
-  await Future.delayed(Duration(milliseconds: 100));
+  await Future.delayed(const Duration(milliseconds: 100));
   chat.read(13);
-  await Future.delayed(Duration(milliseconds: 100));
+  await Future.delayed(const Duration(milliseconds: 100));
   chat.read(14);
-  await Future.delayed(Duration(milliseconds: 100));
+  await Future.delayed(const Duration(milliseconds: 100));
 
   chat.read(15);
 
-  await Future.delayed(Duration(milliseconds: 1000));
+  await Future.delayed(const Duration(milliseconds: 1000));
 
   chat.read(20);
 
-  await Future.delayed(Duration(milliseconds: 1000));
+  await Future.delayed(const Duration(milliseconds: 1000));
 
   chat.read(35);
-  await Future.delayed(Duration(milliseconds: 100));
+  await Future.delayed(const Duration(milliseconds: 100));
   chat.read(36);
-  await Future.delayed(Duration(milliseconds: 500));
+  await Future.delayed(const Duration(milliseconds: 500));
   chat.read(37);
-  await Future.delayed(Duration(milliseconds: 800));
+  await Future.delayed(const Duration(milliseconds: 800));
 
   chat.read(40);
 }

@@ -1,0 +1,8 @@
+builders:
+  serialization_builder:
+    import: "package:task_2/task_2.dart"
+    builder_factories: ["serializationBuilder"]
+    build_extensions: {".dart": [".my.dart"]}
+    auto_apply: dependents
+    build_to: source
+

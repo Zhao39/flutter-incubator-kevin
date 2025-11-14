@@ -1,0 +1,8 @@
+builders:
+  summary_builder:
+    import: "package:task_1/task_1.dart"
+    builder_factories: ["summaryBuilder"]
+    build_extensions: {".dart": []}
+    auto_apply: dependents
+    build_to: source
+

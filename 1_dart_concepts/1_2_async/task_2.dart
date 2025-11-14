@@ -2,28 +2,22 @@ import 'dart:async';
 import 'dart:math';
 
 class Server {
-  /// [StreamController] simulating an ongoing websocket endpoint.
   StreamController<int>? _controller;
-
-  /// [Timer] periodically adding data to the [_controller].
   Timer? _timer;
 
-  /// Initializes this [Server].
   Future<void> init() async {
     final Random random = Random();
 
     while (true) {
-      _controller = StreamController();
-      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      _controller = StreamController<int>();
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         _controller?.add(timer.tick);
       });
 
-      // Oops, a crash happened...
       await Future.delayed(
         Duration(milliseconds: (1000 + (5000 * random.nextDouble())).round()),
       );
 
-      // Kill the [StreamController], simulating a network loss.
       _controller?.addError(DisconnectedException());
       _controller?.close();
       _controller = null;
@@ -31,15 +25,12 @@ class Server {
       _timer?.cancel();
       _timer = null;
 
-      // Waiting for server to recover...
       await Future.delayed(
         Duration(milliseconds: (1000 + (5000 * random.nextDouble())).round()),
       );
     }
   }
 
-  /// Returns a [Stream] of data, if this [Server] is up and reachable, or
-  /// throws [DisconnectedException] otherwise.
   Future<Stream<int>> connect() async {
     if (_controller != null) {
       return _controller!.stream;
@@ -53,11 +44,34 @@ class DisconnectedException implements Exception {}
 
 class Client {
   Future<void> connect(Server server) async {
-    // TODO: Implement backoff re-connecting.
-    //       Data from the [server] should be printed to the console.
+    int attempt = 0;
+
+    while (true) {
+      try {
+        print('🔌 Trying to connect (attempt #${attempt + 1})...');
+        final stream = await server.connect();
+
+        print('✅ Connected successfully!\n');
+
+        await for (final value in stream) {
+          print('📩 Received: $value');
+        }
+      } on DisconnectedException {
+        final delay = min(pow(2, attempt), 32).toInt();
+        print('⚠️ Disconnected. Retrying in ${delay}s...\n');
+
+        await Future.delayed(Duration(seconds: delay));
+        attempt++;
+      } catch (e) {
+        print('💥 Unexpected error: $e');
+        await Future.delayed(const Duration(seconds: 2));
+      }
+    }
   }
 }
 
 Future<void> main() async {
-  Client()..connect(Server()..init());
+  final server = Server();
+  server.init();
+  await Client().connect(server);
 }

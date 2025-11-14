@@ -169,9 +169,9 @@ For more information and insights about [code generation][10] in [Dart], read th
 
 After completing everything above, you should be able to answer (and understand why) the following questions:
 - What is code generation? Which problems does it solve and how?
-  Code generation is the automatic creation of source code by tools or scripts based on existing input—like annotations, schemas, or interface definitions.
-  It solves the boilerplate problem: repetitive, error-prone code that developers would otherwise have to write manually (e.g., serialization, API clients, data models).
-  By generating code automatically, Dart developers ensure consistency, type safety, and faster development, especially in large projects (like with json_serializable, retrofit, or isar) while keeping manually written code clean and focused on business logic.
+  Code genration is a tool that writes code automatically. This looks at the existing code or rules and create needed code.
+  It writes repetitive code automatically, reduces mistakes and saves development time.
+  This removes repetition, avoids human errors, and keeps everything updated whenever the data or structure changes.
 - How code generations is represented in [Dart]?
   Code generation in Dart is represented by Builders registered in a build.yaml file, executed by build_runner, and often powered by source_gen to create .g.dart files automatically during builds.
 - How [`Builder`]s are registered and used in a [Dart] project?
@@ -180,7 +180,7 @@ After completing everything above, you should be able to answer (and understand 
   analyzer helps your tool understand existing Dart code.
   source_gen helps your tool write Dart code safely and automatically.
 
-  Why both are needed
+  Why both are needed:
     analyzer reads and interprets existing Dart code.
     source_gen uses that information to produce new Dart code and plug into the build_runner pipeline.
 - What are annotations in [Dart]? How are custom annotations created? How they can be used and why?

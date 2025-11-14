@@ -104,8 +104,10 @@ For the [code in this step](task.dart), do the following:
 
 After completing everything above, you should be able to answer (and understand why) the following questions:
 - Why should you be explicit about types in [Dart]?
+  Be explicit about types in Dart when writing anything that’s shared, complex, or long-lived.
+  Use inference (var, final) only when the type is obvious and local.
 - What is a [newtype idiom][21] and why is it useful?
-
+  The newtype idiom means creating tiny wrapper classes around primitives to give them semantic meaning, add validation, and enforce safety at compile time.
 
 
 
