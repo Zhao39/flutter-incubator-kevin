@@ -131,9 +131,23 @@ Write a program which deserializes the [following JSON](request.json) into a `Re
 
 After completing everything above, you should be able to answer (and understand why) the following questions:
 - What is serialization? Why is it used? What problems does it solve?
+  Serialization means converting an object (in memory) into a format that can be easily stored or transmitted — like JSON, YAML, XML, or binary — and then reconstructed later (deserialized) back into the same object.
+
+  What Problems It Solves:
+    Serialization converts it into a common, platform-neutral format like JSON or Protocol Buffers.
+    Serialization lets you store structured data (like settings, game saves, cached results) to reload later.
+    Serialization converts structured data to bytes or text that can travel through the network.
+    Serialization bridges the gap between different languages:
 - How serialization is represented in [Dart]? Describe and explain core abstractions.
+  In Dart, serialization is represented by a layered abstraction built around the Codec and Converter classes from dart:convert, combined with the convention of toJson() / fromJson() methods for domain models.
+  Together, they make it easy to translate objects into text or bytes for storage, networking, and interoperability.
 - What are good practices when implementing a serializable type? Why?
+  Good practices include keeping serialization logic separate from business logic, using explicit and type-safe fields, validating input, and ensuring toJson() and fromJson() are reversible and consistent.
+  These help prevent runtime errors, make your data models predictable, and ensure your objects can be safely stored, transmitted, and reconstructed across systems.
 - How code generation can help with serialization? When is it better to use it? When not?
+  Code generation automates creating toJson() and fromJson() methods, reducing boilerplate and human error while ensuring consistency and type safety across large or complex models.
+  It’s best used when your app has many data classes, frequently changing schemas, or strict API contracts.
+  However, for small projects or simple one-off models, manual serialization is often simpler and avoids the added build complexity.
 
 
 
