@@ -1,5 +1,10 @@
+import 'custom_datetime.dart';
+
 void main() {
-  // Create a native and web implementations for a custom [DateTime], supporting
-  // microseconds. Use conditional compilation to export the class for general
-  // use on any platform.
+  final now = CustomDateTime.now();
+  print('Now (µs since epoch): ${now.microsecondsSinceEpoch}');
+  print('ISO: ${now.toIso8601String()}');
+
+  final later = now.addMicroseconds(500);
+  print('Later (µs since epoch): ${later.microsecondsSinceEpoch}');
 }

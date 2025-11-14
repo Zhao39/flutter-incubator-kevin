@@ -62,9 +62,32 @@ Create a native and web implementations for a custom `DateTime` type, supporting
 
 After completing everything above, you should be able to answer (and understand why) the following questions:
 - How [Dart] compiles to and works on native platforms? In web?
+  On native platforms:
+    Dart can compile codes directly on machine code.
+    For production, Dart uses AOT compilation to create fast native binaries.
+    For development, Dart uses JIT for fast reload works.
+  In web:
+    Dart code does not run natively in the browser, instead, Dart compiles code to javascript.
+    The compiler used is dart2js for production and dartdevc for development.
 - What is [Dart] VM? How does it work?
+  The Dart VM is the runtime engine that runs Dart code during devlopment on native (non-web) platforms with JIT.
+  The Dart VM reads the code -> JIT compiles it -> Runs code inside isolates -> Provides core runtime features -> Interacts with the OS.
 - Why may some libraries be unavailable in web or natively?
+  Some Dart libraries are unavailable on web or native because the underlying platform doesn’t support the same features or system access.
 - How to check whether [Dart] supports a library on the platform it compiles on?
+  Why not work on web:
+    Browsers can't access the file system
+    Browsers can't open raw network sockets
+    Browsers can't run native code
+    Browsers can't access OS features
+    Browsers can't start threads freely
+    Browsers can't use system hardware directly
+  Why not work on native platforms:
+    Native platforms don't have the DOM
+    Native platforms don't have browser APIs
+    Native platforms don't have Javascript environment
+    Native platforms don't have HTML rendering
+    Native platforms don't have web-specific networking (CORS, fetch, etc.)
 
 
 
